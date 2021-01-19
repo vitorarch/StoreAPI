@@ -9,6 +9,8 @@ namespace API.Validators
 {
     public class OrderItemValidator : AbstractValidator<OrderItem>
     {
+        public List<Guid> ProductsOrdered { get; set; }
+
         public OrderItemValidator()
         {
             RuleFor(oi => oi.Id)
@@ -25,5 +27,6 @@ namespace API.Validators
                 .WithMessage("Valor deve ser maior que zero");
 
         }
+
     }
 }

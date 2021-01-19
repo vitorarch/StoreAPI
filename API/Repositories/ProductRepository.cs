@@ -46,12 +46,20 @@ namespace API.Repositories
 
                 return product;
             }
-            else return result.Errors;
+            else return result.Errors[0].ErrorMessage;
         }
 
-        public async Task<Product> DeleteProduct(Guid productId)
+        public async Task<dynamic> DeleteProduct(Guid productId)
         {
             var product = await _context.Products.FindAsync(productId);
+            // validar s e o produto existe
+            if (product == null) return null;
+
+            var productOrdered = _context.Itens.Where(p => p.ProductId == productId).FirstOrDefault();
+            //valida se o produto ja foi vendido
+            if (productOrdered != null) return "Esse produto já foi vendido";
+
+
             if (product == null) return null;
             else
             {
@@ -63,24 +71,22 @@ namespace API.Repositories
 
         public dynamic EditProduct(Product product)
         {
-            var validate = _validator.Validate(product);
-            if (validate.IsValid)
+            var id = product.Id;
+            var _product = _context.Products.Find(id);
+            if (_product == null) return "Produto não encontrado";
+            else
             {
-                var id = product.Id;
-                var _product = _context.Products.Find(id);
-                if (_product == null) return "Produto não encontrado";
-                else
-                {
-                    //pq nao posso fazer apenas _product = product
+                //pq nao posso fazer apenas _product = product?
+                if(!string.IsNullOrEmpty(product.Name))
                     _product.Name = product.Name;
+                if (product.Value != null )
                     _product.Value = product.Value;
+                if (!string.IsNullOrEmpty(product.Category))
                     _product.Category = product.Category;
 
-                    _context.SaveChanges();
-                    return _product;
-                }
+                _context.SaveChanges();
+                return _product;
             }
-            else return validate.Errors;
         }
 
         public IEnumerable<Product> GetProductsList()

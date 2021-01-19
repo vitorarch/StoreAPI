@@ -13,14 +13,14 @@ namespace API.Models
             Id = Guid.NewGuid();
         }
 
-        [Required]
+        //[Required]
         public Guid Id { get; set; }
 
-        [Required]
+        //[Required]
         [MaxLength(11)]
         public string Cpf { get; set; }
 
-        [Required]
+        //[Required]
         public decimal TotalValue { get; set; }
 
         public List<OrderItem> Items { get; set; }

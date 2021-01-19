@@ -9,6 +9,6 @@ namespace API.Interfaces
     public interface IOrderRepository
     {
         public Task<dynamic> AddOrder(Order order);
-        public IEnumerable<Order> GetOrderList();
+        public IEnumerable<dynamic> GetOrderList();
     }
 }

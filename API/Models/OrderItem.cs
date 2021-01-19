@@ -14,19 +14,18 @@ namespace API.Models
             Id = Guid.NewGuid();
         }
 
-        [Key]
+        //[Key]
         public Guid Id { get; set; }
 
-        [Required]
+        //[Required]
         public Guid ProductId { get; set; }
 
-
-        [Required]
+        //[Required]
         [MaxLength(50)]
         public string ProductName { get; set; }
 
-        [Required]
-        public decimal ProductValue { get; set; }
+        //[Required]
+        public decimal? ProductValue { get; set; }
 
         public Guid OrderId { get; set; }
 

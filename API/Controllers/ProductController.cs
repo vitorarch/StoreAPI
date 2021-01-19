@@ -45,7 +45,7 @@ namespace API.Controllers
             var request = await _repository.AddProduct(product);
 
             if (request is Product) return Ok(request);
-            else return Problem(request);
+            else return BadRequest(new { error = request });
         }
 
 
@@ -54,7 +54,7 @@ namespace API.Controllers
         {
             var request = _repository.EditProduct(product);
 
-            if (request is string) return Problem(request);
+            if (request is string) return BadRequest(new { error = request });
             else return Ok(request);
         }
 
@@ -64,8 +64,9 @@ namespace API.Controllers
         {
             var request = await _repository.DeleteProduct(id);
             
-            if (request is null) return Problem("Produto não encontrado");
-            else return Ok($"{request.Name} deletado com sucesso");
+            if (request is string) return BadRequest(new { error = request });
+            else if (request == null) return BadRequest(new { error = "Produto não encontrado" });
+            else return Ok(new { message = $"{request.Name} deletado com sucesso" });
         }
     }
 }

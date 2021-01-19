@@ -12,7 +12,7 @@ namespace API.Interfaces
         public IEnumerable<Product> GetAllProducts();
         public Task<dynamic> AddProduct(Product product);
         public dynamic EditProduct(Product product);
-        public Task<Product> DeleteProduct(Guid id);
+        public Task<dynamic> DeleteProduct(Guid id);
         public IEnumerable<Product> GetProductsList();
 
     }

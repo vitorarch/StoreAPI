@@ -5387,23 +5387,23 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\Vitor Archanjinho\\.nuget\\packages\\": {},
+    "C:\\Users\\DEV\\.nuget\\packages\\": {},
     "C:\\Microsoft\\Xamarin\\NuGet\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\Vitor Archanjinho\\Desktop\\Store\\API\\API.csproj",
+      "projectUniqueName": "C:\\Users\\DEV\\Desktop\\StoreAPI\\StoreAPI\\API\\API.csproj",
       "projectName": "API",
-      "projectPath": "C:\\Users\\Vitor Archanjinho\\Desktop\\Store\\API\\API.csproj",
-      "packagesPath": "C:\\Users\\Vitor Archanjinho\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\Vitor Archanjinho\\Desktop\\Store\\API\\obj\\",
+      "projectPath": "C:\\Users\\DEV\\Desktop\\StoreAPI\\StoreAPI\\API\\API.csproj",
+      "packagesPath": "C:\\Users\\DEV\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\DEV\\Desktop\\StoreAPI\\StoreAPI\\API\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Microsoft\\Xamarin\\NuGet\\"
       ],
       "configFilePaths": [
-        "C:\\Users\\Vitor Archanjinho\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\DEV\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Xamarin.Offline.config"
       ],
@@ -5475,7 +5475,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.102\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.101\\RuntimeIdentifierGraph.json"
       }
     }
   }

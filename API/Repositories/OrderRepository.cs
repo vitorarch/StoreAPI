@@ -11,7 +11,7 @@ namespace API.Repositories
 {
     public class OrderRepository : IOrderRepository
     {
-        
+        //private List<Guid> _productsOrded;
         private StoreContext _context;
         private OrderValidator _orderValidator;
 
@@ -19,6 +19,7 @@ namespace API.Repositories
         {
             _context = context;
             _orderValidator = new OrderValidator();
+            //_productsOrded = new List<Guid>();
         }
 
         public async Task<dynamic> AddOrder(Order order)
@@ -28,7 +29,8 @@ namespace API.Repositories
             foreach(var x in order.Items)
             {
                 x.OrderId = order.Id;
-                totalValue += x.ProductValue;
+                totalValue += (decimal)x.ProductValue;
+                //productsOrded.Add(x.ProductId);
             }
 
             order.TotalValue = totalValue;
@@ -37,8 +39,8 @@ namespace API.Repositories
 
             if(result.IsValid)
             {
+                await _context.Itens.AddRangeAsync(order.Items);
                 await _context.Orders.AddAsync(order);
-                _context.Entry(order).State = Microsoft.EntityFrameworkCore.EntityState.Detached;
 
                 await _context.SaveChangesAsync();
                 return order;
@@ -47,9 +49,19 @@ namespace API.Repositories
             //var order = _context.Orders.AddAsync(order);
         }
 
-        public IEnumerable<Order> GetOrderList()
+        public IEnumerable<dynamic> GetOrderList()
         {
-            return _context.Orders.ToList();
+            List<dynamic> list = new List<dynamic>(); 
+            var x = _context.Orders.ToList();
+            foreach(var y in x)
+            {
+                list.Add(new
+                {
+                    Cpf = y.Cpf,
+                    TotalValue = y.TotalValue
+                });
+            }
+            return list;
         }
     }
 }
