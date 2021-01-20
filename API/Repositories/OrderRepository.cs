@@ -9,9 +9,9 @@ using System.Threading.Tasks;
 
 namespace API.Repositories
 {
+
     public class OrderRepository : IOrderRepository
     {
-        //private List<Guid> _productsOrded;
         private StoreContext _context;
         private OrderValidator _orderValidator;
 
@@ -19,21 +19,12 @@ namespace API.Repositories
         {
             _context = context;
             _orderValidator = new OrderValidator();
-            //_productsOrded = new List<Guid>();
         }
 
+        #region Controller Logic
         public async Task<dynamic> AddOrder(Order order)
         {
-            decimal totalValue = 0;
-
-            foreach(var x in order.Items)
-            {
-                x.OrderId = order.Id;
-                totalValue += (decimal)x.ProductValue;
-                //productsOrded.Add(x.ProductId);
-            }
-
-            order.TotalValue = totalValue;
+            CreatingRelationBetweenOrderAndOrderItem(order);
 
             var result = _orderValidator.Validate(order);
 
@@ -46,22 +37,46 @@ namespace API.Repositories
                 return order;
             }
             return result.Errors;
-            //var order = _context.Orders.AddAsync(order);
         }
 
-        public IEnumerable<dynamic> GetOrderList()
+        public dynamic GetOrderList()
         {
-            List<dynamic> list = new List<dynamic>(); 
-            var x = _context.Orders.ToList();
-            foreach(var y in x)
+            var list = GetCpfAndTotalValueAttributes();
+            return list;
+        }
+
+        #endregion
+
+        #region Auxiliar Methods
+
+        private dynamic GetCpfAndTotalValueAttributes()
+        {
+            List<dynamic> list = new List<dynamic>();
+            var order = _context.Orders.ToList();
+
+            foreach (var attribute in order)
             {
                 list.Add(new
                 {
-                    Cpf = y.Cpf,
-                    TotalValue = y.TotalValue
+                    Cpf = attribute.Cpf,
+                    TotalValue = attribute.TotalValue
                 });
             }
             return list;
         }
+
+        private void CreatingRelationBetweenOrderAndOrderItem(Order order)
+        {
+            decimal totalValue = 0;
+
+            foreach (var x in order.Items)
+            {
+                x.OrderId = order.Id;
+                totalValue += (decimal)x.ProductValue;
+            }
+            order.TotalValue = totalValue;
+        }
+
+        #endregion
     }
 }

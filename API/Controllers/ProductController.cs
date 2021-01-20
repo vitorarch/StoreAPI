@@ -21,14 +21,14 @@ namespace API.Controllers
             _repository = repository;
         }
 
-        //[HttpGet("?Name={productName}")]
-        //public IActionResult GetProduct(string productName)
-        //{
-        //    var request = _repository.GetProduct(productName);
+        [HttpGet("Name/{productName}")]
+        public IActionResult GetProductByName(string productName)
+        {
+            var request = _repository.GetProductByName(productName);
 
-        //    if (request is Product) return Ok(request);
-        //    else return Problem("Produto não encontrado");
-        //}
+            if (request is Product) return Ok(request);
+            else return BadRequest(new { error = "Produto não encontrado" });
+        }
 
         [HttpGet]
         public IActionResult GetProduct(string productName)
@@ -54,7 +54,7 @@ namespace API.Controllers
         {
             var request = _repository.EditProduct(product);
 
-            if (request is string) return BadRequest(new { error = request });
+            if (request == null) return BadRequest(new { error = "Produto não encontrado" });
             else return Ok(request);
         }
 

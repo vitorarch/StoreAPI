@@ -8,10 +8,10 @@ namespace API.Interfaces
 {
     public interface IProductRepository
     {
-        public Product GetProduct(string productName);
+        public Product GetProductByName(string productName);
         public IEnumerable<Product> GetAllProducts();
         public Task<dynamic> AddProduct(Product product);
-        public dynamic EditProduct(Product product);
+        public Product EditProduct(Product product);
         public Task<dynamic> DeleteProduct(Guid id);
         public IEnumerable<Product> GetProductsList();
 

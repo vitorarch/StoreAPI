@@ -16,13 +16,12 @@ namespace API.Repositories
 
         public ProductRepository(StoreContext context)
         {
-            //_validator = new ProductValidator();
             _context = context;
         }
 
-        public Product GetProduct(string productName)
+        public Product GetProductByName(string productName)
         {
-            var product = _context.Products.First(p => p.Name == productName);
+            var product = _context.Products.Where(p => p.Name == productName).FirstOrDefault();
             if (product == null) return null;
             else return product;
         }
@@ -69,21 +68,13 @@ namespace API.Repositories
             }
         }
 
-        public dynamic EditProduct(Product product)
+        public Product EditProduct(Product product)
         {
-            var id = product.Id;
-            var _product = _context.Products.Find(id);
-            if (_product == null) return "Produto não encontrado";
+            var _product = SelectObjectChanges(product);
+
+            if (_product == null) return null;
             else
             {
-                //pq nao posso fazer apenas _product = product?
-                if(!string.IsNullOrEmpty(product.Name))
-                    _product.Name = product.Name;
-                if (product.Value != null )
-                    _product.Value = product.Value;
-                if (!string.IsNullOrEmpty(product.Category))
-                    _product.Category = product.Category;
-
                 _context.SaveChanges();
                 return _product;
             }
@@ -93,5 +84,28 @@ namespace API.Repositories
         {
              return _context.Products.ToList();
         }
+
+        #region Auxiliar Methods
+
+        private Product SelectObjectChanges(Product product)
+        {
+            var _product = _context.Products.Find(product.Id);
+
+            if (_product == null) return null;
+            else
+            {
+                if (!string.IsNullOrEmpty(product.Name))
+                    _product.Name = product.Name;
+                if (product.Value != null)
+                    _product.Value = product.Value;
+                if (!string.IsNullOrEmpty(product.Category))
+                    _product.Category = product.Category;
+
+                return _product;
+            }
+        }
+
+        #endregion
+
     }
 }
