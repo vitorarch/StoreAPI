@@ -25,7 +25,7 @@ namespace API.Models
         public string ProductName { get; set; }
 
         //[Required]
-        public decimal? ProductValue { get; set; }
+        public decimal ProductValue { get; set; }
 
         public Guid OrderId { get; set; }
 

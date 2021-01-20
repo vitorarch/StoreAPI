@@ -28,7 +28,7 @@ namespace API.Controllers
             var request = await _repository.AddOrder(order);
             
             if (request is Order) return Ok(request);
-            else return Problem(request[0]);
+            else return BadRequest( new { error = request });
         }
 
 

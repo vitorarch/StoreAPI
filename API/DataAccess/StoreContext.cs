@@ -13,7 +13,7 @@ namespace API.DataAccess
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            //optionsBuilder.EnableSensitiveDataLogging(true);
+            optionsBuilder.EnableSensitiveDataLogging(true);
             //Use In Memory Database
             //optionsBuilder.UseInMemoryDatabase("Store");
 

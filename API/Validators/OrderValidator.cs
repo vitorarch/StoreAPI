@@ -10,11 +10,17 @@ namespace API.Validators
 {
     public class OrderValidator : AbstractValidator<Order>
     {
+        //public string Error { get; set; }
+
         private OrderItemValidator _orderItemValidator;
+
         public OrderValidator()
         {
             _orderItemValidator = new OrderItemValidator();
 
+            RuleFor(o => o.Id)
+                .NotEmpty()
+                .WithMessage("Identificador obrigatório");
             RuleFor(o => o.Cpf)
                 .NotEmpty()
                 .WithMessage("Cpf obrigatório");
@@ -32,9 +38,13 @@ namespace API.Validators
             foreach (var item in items)
             {
                 result = _orderItemValidator.Validate(item);
+                if (!result.Errors.Count.Equals(0))
+                {
+                    //Error = result.ToString();
+                    return false;
+                }
             }
-            if (result.Errors.Count.Equals(0)) return true;
-            return false;
+            return true;
         }
 
     }

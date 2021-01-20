@@ -36,7 +36,7 @@ namespace API.Repositories
                 await _context.SaveChangesAsync();
                 return order;
             }
-            return result.Errors;
+            return result.Errors[0].ErrorMessage;
         }
 
         public dynamic GetOrderList()
@@ -73,6 +73,7 @@ namespace API.Repositories
             {
                 x.OrderId = order.Id;
                 totalValue += (decimal)x.ProductValue;
+                x.ProductId = Guid.NewGuid();
             }
             order.TotalValue = totalValue;
         }

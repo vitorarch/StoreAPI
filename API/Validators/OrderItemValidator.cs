@@ -17,7 +17,7 @@ namespace API.Validators
                 .NotEmpty()
                 .WithMessage("Identificador obrigatório");
             RuleFor(oi => oi.ProductId)
-                .NotEmpty()
+                .NotEqual(Guid.Empty)
                 .WithMessage("Identificador do produto obrigatório");
             RuleFor(oi => oi.ProductName)
                 .NotEmpty()
